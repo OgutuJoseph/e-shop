@@ -15,7 +15,7 @@ const registerUser = async (req, res, next) => {
         })
 
         await newUser.save();
-        res.status(200).send('Member has been registered succesffully!');
+        res.status(200).send('User has been registered succesffully!');
     } catch (error) {
         next(error)
     }
@@ -23,24 +23,30 @@ const registerUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
     try {
 
-        const data = req.body;
+        const data  = req.body;
 
-        const user = await User.findOne({ username: data.username })
+        const user = await User.findOne({ username: data.username, isAdmin: {$ne: true} });
+        if(!user)
+            res.status(401).send('User not found.');
+            // return next(createError(401, 'User not found'));
 
-        if (!user) 
-            return next(createError(404, 'Member not found!'))
-        
-        const isPasswordCorrect = await bcrypt.compare(data.password, user.password)
-        if (!isPasswordCorrect) 
-            return next(createError(400, 'Wrong username or password.'))
+        const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SECRET);
+        const ipassword = hashedPassword.toString(CryptoJS.enc.Utf8)
 
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET)
+        if(ipassword !== data.password)
+            res.status(401).send('Wrong credentials.');
+            // return next(createError(401).json('Wrong credentials!'));
 
-        const { password, isAdmin, ...otherDetails } = user._doc;
-        res
-        .cookie('access_token', token, { httpOnly: true })
-        .status(200)
-        .send({...otherDetails, token});
+        const { password, ...others } = user._doc;
+        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
+
+        // res.status(200).json({...others, token}); // returns all in one json
+        res.status(200).json({others, token}); // returns others in one json and token in other json
+
+        // res
+        // .cookie('access_token', token, { httpOnly: true })
+        // .status(200)
+        // .send({...otherDetails, token, isAdmin});
     } catch (error) {
         next(error)
     }

@@ -24,22 +24,29 @@ const login = async (req, res, next) => {
 
         const data  = req.body;
 
-        const user = await User.findOne({ username: data.username })
+        const user = await User.findOne({ username: data.username });
+        if(!user)
+            res.status(401).send('Admin not found.');
+            // return next(createError(401, 'Admin not found'));
 
-        if (!user) 
-            return next(createError(404, 'Admin not found!'))
-        
-        const isPasswordCorrect = await bcrypt.compare(data.password, user.password)
-        if (!isPasswordCorrect) 
-            return next(createError(400, 'Wrong username or password.'))
+        const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SECRET);
+        const ipassword = hashedPassword.toString(CryptoJS.enc.Utf8)
 
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET)
+        if(ipassword !== data.password)
+            res.status(401).send('Wrong credentials.');
+            // return next(createError(401).json('Wrong credentials!'));
 
-        const { password, isAdmin, ...otherDetails } = user._doc;
-        res
-        .cookie('access_token', token, { httpOnly: true })
-        .status(200)
-        .send({...otherDetails, token, isAdmin}); 
+        // const { password, ...others } = user; // returns a huge object cropped from db
+        const { password, ...others } = user._doc;
+        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
+
+        // res.status(200).json({...others, token}); // returns all in one json
+        res.status(200).json({others, token}); // returns others in one json and token in other json
+
+        // res
+        // .cookie('access_token', token, { httpOnly: true })
+        // .status(200)
+        // .send({...otherDetails, token, isAdmin}); 
     } catch (error) {
         next(error)
     }
