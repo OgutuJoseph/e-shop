@@ -30,10 +30,12 @@ app.use(express.json());
 
 
 /** import routes */
-const usersRoute = require('./routes/users')
+const adminsRoute = require('./routes/admin');
+const usersRoute = require('./routes/users');
 
 
 /** routes */
+app.use('/api/admins', adminsRoute);
 app.use('/api/users', usersRoute)
 
 /** connect app */
