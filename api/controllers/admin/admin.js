@@ -41,12 +41,7 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
 
         // res.status(200).json({...others, token}); // returns all in one json
-        res.status(200).json({others, token}); // returns others in one json and token in other json
-
-        // res
-        // .cookie('access_token', token, { httpOnly: true })
-        // .status(200)
-        // .send({...otherDetails, token, isAdmin}); 
+        res.status(200).json({others, token}); // returns others in one json and token in other json 
     } catch (error) {
         next(error)
     }
@@ -65,7 +60,7 @@ const getAllAdmins = async (req, res, next) => {
 const getAdmin = async (req, res, next) => {
     
     try {
-        const admin = await User.findById(req.params._id);
+        const admin = await User.findById(req.params.id);
         const data = admin;
         
         res.status(200).json(data);
@@ -75,10 +70,21 @@ const getAdmin = async (req, res, next) => {
 };
 const updateAdmin = async (req, res, next) => {
 
-    const data = req.body
+    const data = req.body;
+
+    if (data.password) {
+        data.password = CryptoJS.AES.encrypt(
+            data.password,
+            process.env.PASS_SECRET
+        ).toString();
+    }
     
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params._id, { $set: data }, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id, 
+            { $set: data }, 
+            { new: true }
+        );
         res.status(200).json(updatedUser);
     } catch (error) {
         next(error)
@@ -87,7 +93,7 @@ const updateAdmin = async (req, res, next) => {
 const deleteAdmin = async (req, res, next) => {
     
     try {
-        await User.findByIdAndDelete(req.params._id);
+        await User.findByIdAndDelete(req.params.id);
         res.status(200).json('Admin has been deleted.');
     } catch (error) {
         next(error)

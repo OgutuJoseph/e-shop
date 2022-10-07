@@ -27,32 +27,34 @@ const loginUser = async (req, res, next) => {
 
         const user = await User.findOne({ username: data.username, isAdmin: {$ne: true} });
         if(!user)
-            res.status(401).send('User not found.');
-            // return next(createError(401, 'User not found'));
+            res.status(401).send('User not found.'); 
 
         const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SECRET);
         const ipassword = hashedPassword.toString(CryptoJS.enc.Utf8)
 
         if(ipassword !== data.password)
-            res.status(401).send('Wrong credentials.');
-            // return next(createError(401).json('Wrong credentials!'));
+            res.status(401).send('Wrong credentials.'); 
 
         const { password, ...others } = user._doc;
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '3d' });
+        const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
 
-        // res.status(200).json({...others, token}); // returns all in one json
-        res.status(200).json({others, token}); // returns others in one json and token in other json
-
-        // res
-        // .cookie('access_token', token, { httpOnly: true })
-        // .status(200)
-        // .send({...otherDetails, token, isAdmin});
+        // res.status(200).json({...others, accessToken}); // returns all in one json
+        res.status(200).json({others, accessToken}); // returns others in one json and token in other json
     } catch (error) {
         next(error)
     }
 };
 
 /** Self Management */
+const getAllUsers = async (req, res, next) => {
+    
+    try {
+        const users = await User.find({ "isAdmin": { $ne: "true" } });
+        res.status(200).json(users);
+    } catch (error) {
+        next(createError);
+    }
+};
 const getUser = async (req, res, next) => {
     
     try {
@@ -66,13 +68,24 @@ const getUser = async (req, res, next) => {
 };
 const updateUser = async (req, res, next) => {
 
-    const { data } = req.body
+    const data = req.body
     
+    if (data.password) {
+        data.password = CryptoJS.AES.encrypt(
+            data.password,
+            process.env.PASS_SECRET
+        ).toString();
+    }
+
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, { $set: data }, { new: true });
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        next(error)
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: data },
+            { new: true }
+        );
+    res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(500).json(err);
     }
 };
 const deleteUser = async (req, res, next) => {
@@ -88,6 +101,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
     registerUser,
     loginUser,
+    getAllUsers,
     getUser,
     updateUser,
     deleteUser
