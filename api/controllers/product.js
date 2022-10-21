@@ -1,5 +1,5 @@
-const Product = require('../../models/Product.js');
-const { createError } = require('../../utils/error.js');
+const Product = require('../models/Product.js');
+const { createError } = require('../utils/error.js');
 
 /** Manage Products */
 const addProduct = async (req, res, next) => {

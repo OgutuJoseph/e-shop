@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addProduct, getAllProducts, getProduct, updateProduct, deleteProduct, getProductsByParams } = require('../controllers/admin/product.js');
+const { addProduct, getAllProducts, getProduct, updateProduct, deleteProduct, getProductsByParams } = require('../controllers/product.js');
 const { verifyAdminToken } = require('../utils/verifyToken.js');
 
 /** Manage Products */

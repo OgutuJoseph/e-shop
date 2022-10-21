@@ -1,7 +1,8 @@
 // const router = require('express').Router();
 const express = require('express');
 const router = express.Router();
-const  { registerUser, loginUser, getUser, updateUser, deleteUser, getAllUsers, getUserStats  } = require('../controllers/user.js');
+const  { registerUser, loginUser } = require('../controllers/auth/auth');
+const  { getUser, updateUser, deleteUser, getAllUsers, getUserStats  } = require('../controllers/user.js');
 const { verifyUserToken, verifyAdminToken } = require('../utils/verifyToken.js');
 
 /** Auth */
