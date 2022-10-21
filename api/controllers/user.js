@@ -122,6 +122,7 @@ const getUserStats = async (req, res, next) => {
         res.status(200).json(data);
     } catch (error) {
         next(createError);
+        // console.log('err: ', error);
     }
 };
 

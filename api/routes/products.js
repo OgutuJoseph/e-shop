@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { addProduct, getAllProducts, getProduct, updateProduct, deleteProduct } = require('../controllers/admin/product.js');
-const { verifyAdmin } = require('../utils/verifyToken.js');
+const { verifyAdminToken } = require('../utils/verifyToken.js');
 
 /** Manage Products */
-router.post('/products', verifyAdmin, addProduct);
-router.get('/products', verifyAdmin, getAllProducts);
-router.get('/products/:_id', verifyAdmin, getProduct);
-router.put('/products/:_id', verifyAdmin, updateProduct);
-router.delete('/products/:_id', verifyAdmin, deleteProduct);
+router.post('/', verifyAdminToken, addProduct);
+router.get('/', verifyAdminToken, getAllProducts);
+router.get('/:_id', verifyAdminToken, getProduct);
+router.put('/:_id', verifyAdminToken, updateProduct);
+router.delete('/:_id', verifyAdminToken, deleteProduct);
 
 module.exports = router;

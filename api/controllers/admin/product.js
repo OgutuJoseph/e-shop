@@ -7,11 +7,7 @@ const addProduct = async (req, res, next) => {
 
         const data = req.body;
         
-        const newProduct = Product({
-            name: data.name,
-            fee: data.fee,
-            benefits: data.benefits
-        })
+        const newProduct = Product(data);
 
         await newProduct.save();
         res.status(200).send('Product has been created succesffully!');
