@@ -32,13 +32,15 @@ app.use(express.json());
 /** import routes */
 const adminsRoute = require('./routes/admin');
 const usersRoute = require('./routes/users');
-const productsRooute = require('./routes/products');
+const productsRoute = require('./routes/products');
+const cartsRoute = require('./routes/carts');
 
 
 /** routes */
 app.use('/api/admins', adminsRoute);
 app.use('/api/users', usersRoute);
-app.use('/api/products', productsRooute);
+app.use('/api/products', productsRoute);
+app.use('/api/carts', cartsRoute);
 
 /** connect app */
 const port = process.env.PORT;
