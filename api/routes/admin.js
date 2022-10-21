@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { register, login, getAllAdmins, getAdmin, updateAdmin, deleteAdmin } = require('../controllers/admin/admin.js');
-const  { registerUser, loginUser, updateUser, deleteUser, getUser } = require('../controllers/user.js');
 const { verifyAdminToken } = require('../utils/verifyToken.js');
 
 

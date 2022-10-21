@@ -46,15 +46,6 @@ const loginUser = async (req, res, next) => {
 };
 
 /** Self Management */
-const getAllUsers = async (req, res, next) => {
-    
-    try {
-        const users = await User.find({ "isAdmin": { $ne: "true" } });
-        res.status(200).json(users);
-    } catch (error) {
-        next(createError);
-    }
-};
 const getUser = async (req, res, next) => {
     
     try {
@@ -98,11 +89,48 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+/** Admin Mangement */
+const getAllUsers = async (req, res, next) => {
+    
+    try {
+        const users = await User.find({ "isAdmin": { $ne: "true" } });
+        res.status(200).json(users);
+    } catch (error) {
+        next(createError);
+    }
+};
+const getUserStats = async (req, res, next) => {
+    const date = new Date();
+    const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+    try {
+        
+        const data = await User.aggregate([
+            { 
+                $match: { createdAt: { $gte: lastYear } } 
+            },
+            { 
+                $project: { month: { $month: '$createdAt' } }
+            },
+            {
+                $group: {
+                    _id: '$month',
+                    total: { $sum: 1 }
+                }
+            }
+        ]);
+        res.status(200).json(data);
+    } catch (error) {
+        next(createError);
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
-    getAllUsers,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getAllUsers,
+    getUserStats
 };
