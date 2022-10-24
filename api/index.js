@@ -34,6 +34,7 @@ const adminsRoute = require('./routes/admin');
 const usersRoute = require('./routes/users');
 const productsRoute = require('./routes/products');
 const cartsRoute = require('./routes/carts');
+const ordersRoute = require('./routes/orders');
 
 
 /** routes */
@@ -41,6 +42,7 @@ app.use('/api/admins', adminsRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/products', productsRoute);
 app.use('/api/carts', cartsRoute);
+app.use('/api/orders', ordersRoute);
 
 /** connect app */
 const port = process.env.PORT;

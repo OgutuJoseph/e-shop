@@ -19,7 +19,7 @@ const getAdmin = async (req, res, next) => {
 
         res.status(200).json(data);
     } catch (error) {
-        next(error);
+        next(createError);
     }
 };
 const updateAdmin = async (req, res, next) => {
@@ -40,7 +40,7 @@ const updateAdmin = async (req, res, next) => {
         );
         res.status(200).json(updatedUser);
     } catch (error) {
-        next(error);
+        next(createError);
     }
 };
 const deleteAdmin = async (req, res, next) => {
@@ -48,7 +48,7 @@ const deleteAdmin = async (req, res, next) => {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json("Admin has been deleted.");
     } catch (error) {
-        next(error);
+        next(createError);
     }
 };
 

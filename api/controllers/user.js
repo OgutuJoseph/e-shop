@@ -12,7 +12,7 @@ const getUser = async (req, res, next) => {
         
         res.status(200).json(data);
     } catch (error) {
-        next(createError)
+        next(createError);
     }
 };
 const updateUser = async (req, res, next) => {
@@ -43,7 +43,7 @@ const deleteUser = async (req, res, next) => {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json('User has been deleted.');
     } catch (error) {
-        next(createError)
+        next(createError);
     }
 };
 

@@ -16,7 +16,7 @@ const registerAdmin = async (req, res, next) => {
         await newUser.save();
         res.status(200).send('Admin has been created succesffully!');
     } catch (error) {
-        next(error)
+        next(createError);
     }
 };
 const loginAdmin = async (req, res, next) => {
@@ -43,7 +43,7 @@ const loginAdmin = async (req, res, next) => {
         // res.status(200).json({...others, token}); // returns all in one json
         res.status(200).json({others, token}); // returns others in one json and token in other json 
     } catch (error) {
-        next(error)
+        next(createError);
     }
 };
 
@@ -61,7 +61,7 @@ const registerUser = async (req, res, next) => {
         await newUser.save();
         res.status(200).send('User has been registered succesffully!');
     } catch (error) {
-        next(createError)
+        next(createError);
     }
 }; 
 const loginUser = async (req, res, next) => {
@@ -85,7 +85,7 @@ const loginUser = async (req, res, next) => {
         // res.status(200).json({...others, accessToken}); // returns all in one json
         res.status(200).json({others, accessToken}); // returns others in one json and token in other json
     } catch (error) {
-        next(createError)
+        next(createError);
     }
 };
 

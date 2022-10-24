@@ -12,7 +12,7 @@ const addProduct = async (req, res, next) => {
         await newProduct.save();
         res.status(200).send('Product has been created succesffully!');
     } catch (error) {
-        next(error)
+        next(createError);
     }
 };
 const getAllProducts = async (req, res, next) => {
@@ -32,7 +32,7 @@ const getProduct = async (req, res, next) => {
         
         res.status(200).json(data);
     } catch (error) {
-        next(error)
+        next(createError);
     }
 };
 const updateProduct = async (req, res, next) => {
@@ -43,7 +43,7 @@ const updateProduct = async (req, res, next) => {
         const updatedProduct = await Product.findByIdAndUpdate(req.params._id, { $set: data }, { new: true });
         res.status(200).json(updatedProduct);
     } catch (error) {
-        next(error)
+        next(createError);
     }
 };
 const deleteProduct = async (req, res, next) => {
@@ -52,7 +52,7 @@ const deleteProduct = async (req, res, next) => {
         await Product.findByIdAndDelete(req.params._id);
         res.status(200).json('Product has been deleted.');
     } catch (error) {
-        next(error)
+        next(creatError)
     }
 };
 
@@ -74,7 +74,7 @@ const getProductsByParams = async (req, res, next) => {
 
         res.status(200).json(products);
     } catch (error) {
-        next(error)
+        next(createError);
     }
 }
 
