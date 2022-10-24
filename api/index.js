@@ -1,5 +1,5 @@
 const express = require('express');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -25,7 +25,7 @@ mongoose.connection.on('disconnected', () => {
 
 
 /** middlewares */
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 
@@ -35,6 +35,7 @@ const usersRoute = require('./routes/users');
 const productsRoute = require('./routes/products');
 const cartsRoute = require('./routes/carts');
 const ordersRoute = require('./routes/orders');
+const stripeRoute = require('./routes/stripe');
 
 
 /** routes */
@@ -43,6 +44,7 @@ app.use('/api/users', usersRoute);
 app.use('/api/products', productsRoute);
 app.use('/api/carts', cartsRoute);
 app.use('/api/orders', ordersRoute);
+app.use('/api/checkout', stripeRoute);
 
 /** connect app */
 const port = process.env.PORT;
