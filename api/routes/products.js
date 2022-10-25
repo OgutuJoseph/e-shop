@@ -5,10 +5,10 @@ const { verifyAdminToken } = require('../utils/verifyToken.js');
 
 /** Manage Products */
 router.post('/', verifyAdminToken, addProduct);
-router.get('/', verifyAdminToken, getAllProducts);
+router.get('/', getAllProducts);
 router.get('/find/:_id', verifyAdminToken, getProduct);
 router.put('/:_id', verifyAdminToken, updateProduct);
 router.delete('/:_id', verifyAdminToken, deleteProduct);
-router.get('/byParams', verifyAdminToken, getProductsByParams);
+router.get('/byParams', getProductsByParams);
 
 module.exports = router;

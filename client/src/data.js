@@ -22,18 +22,21 @@ export const sliderItems = [
 export const categories = [
     {
         id: 1,
-        img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "SHIRT STYLE!",
+        img: "https://images.pexels.com/photos/12720347/pexels-photo-12720347.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        title: "MEN'S WEAR",
+        cat: "men's"
     },
     {
         id: 2,
         img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        title: "LOUNGEWEAR LOVE",
+        title: "WOMEN'S WEAR",
+        cat: "women's"
     },
     {
         id: 3,
-        img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-        title: "LIGHT JACKETS",
+        img: "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        title: "FOOT WEAR",
+        cat: "shoes"
     },
 ];
 
