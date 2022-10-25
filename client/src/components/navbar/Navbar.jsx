@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 /** import material components */
 import { Badge } from '@mui/material';
@@ -78,6 +80,11 @@ const MenuItem = styled.div`
 `
 
 const Navbar = () => {
+
+    const cart = useSelector(state => state.cart);
+    const cartItems = useSelector(state => state.cart.cartItems);
+    console.log('cart: ', cart); 
+
     return (
         <Container>
             <Wrapper>
@@ -99,11 +106,13 @@ const Navbar = () => {
                             <MailIcon color="action" />
                         </Badge>
                     </MenuItem> */}
-                    <MenuItem>
-                        <Badge badgeContent={1} color="primary">
-                            <ShoppingCartOutlinedIcon />
-                        </Badge>
-                    </MenuItem>
+                    <Link to='/cart' style={{ color: 'black' }}>
+                        <MenuItem>
+                            <Badge badgeContent={cartItems} color="primary">
+                                <ShoppingCartOutlinedIcon />
+                            </Badge>
+                        </MenuItem>
+                    </Link>
                 </Right>
             </Wrapper>
         </Container>
