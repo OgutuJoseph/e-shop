@@ -41,7 +41,7 @@ const Pay = () => {
 
     return (
         <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'  }}>
-            {/* {
+            {
                 stripeToken 
                 ? 
                 (<span>Processing. Please wait...</span>) 
@@ -62,8 +62,8 @@ const Pay = () => {
                         </button>
                     </StripeCheckout>
                 )
-            } */}
-            <StripeCheckout
+            }
+            {/* <StripeCheckout
                 name='E - Shop'
                 image='/images/logos/product-logo.jpg'
                 billingAddress
@@ -76,7 +76,7 @@ const Pay = () => {
                 <button style={{ border: 'none', width: 120, borderRadius: 5, padding: '20px', backgroundColor: 'black', color: 'white', fontWeight: 600, cursor: 'pointer' }} >
                     Pay
                 </button>
-            </StripeCheckout>
+            </StripeCheckout> */}
         </div>
         
     )
