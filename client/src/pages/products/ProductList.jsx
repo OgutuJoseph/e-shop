@@ -50,7 +50,6 @@ const ProductList = () => {
     const location = useLocation();
     const categoryLocation = location.pathname.split('/')[2];
     
-
     const [filter, setFilters] = useState({});
     const [sort, setSort] = useState('newest');
 
@@ -66,7 +65,7 @@ const ProductList = () => {
         <Container>
             <Announcement />
             <Navbar />
-            <Title>Dresses</Title>
+            <Title>{categoryLocation.toUpperCase()}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products: </FilterText>
@@ -79,7 +78,6 @@ const ProductList = () => {
                         <Option>Red</Option>
                         <Option>Green</Option>
                         <Option>Yellow</Option>
-                        <Option>Baige</Option>
                         <Option>Teal</Option>
                     </Select>
                     <Select name='size' onChange={handleFilters}>

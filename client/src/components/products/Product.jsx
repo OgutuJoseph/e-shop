@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 /** import material icons */ 
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 
 /** styled components */
@@ -75,7 +76,9 @@ const Product = ({ item }) => {
                     <ShoppingCartOutlinedIcon />
                 </Icon>
                 <Icon>
-                    <SearchOutlinedIcon />
+                    <Link style={{ color: 'black' }} to={`/product/${item._id}`}>
+                        <VisibilityOutlinedIcon />
+                    </Link>
                 </Icon>
                 <Icon>
                     <FavoriteBorderOutlinedIcon />
