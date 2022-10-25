@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 /** import css different media types */
 import { mobile } from '../../responsive';
@@ -155,6 +156,11 @@ const SummaryButton = styled.button`
 `
 
 const Cart = () => {
+
+    const cart = useSelector(state => state.cart);
+    const cartItems = useSelector(state => state.cart.cartItems)
+    console.log('cart 2: ', cart);
+
     return (
         <Container>
             <Announcement />
@@ -164,58 +170,43 @@ const Cart = () => {
                 <Top>
                     <TopButton>Continue Shopping</TopButton>
                     <TopTexts>
-                        <TopText>Shopping Bag (2)</TopText>
+                        <TopText>Shopping Bag ({cartItems})</TopText>
                         <TopText>Your Wishlist (0)</TopText>
                     </TopTexts>
                     <TopButton type='filled'>Checkout</TopButton>
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src='/images/cart/cart-image.PNG' />
-                                <Details>
-                                    <ProductName><b>Product : </b>Jesse Thunder Shoes</ProductName>
-                                    <ProductId><b>ID : </b>90058989</ProductId>
-                                    <ProductColor color='black' />
-                                    <ProductSize><b>Size : </b>37.5</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <AddIcon />
-                                    <ProductAmount>2</ProductAmount>
-                                    <RemoveIcon />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 30</ProductPrice>
-                            </PriceDetail> 
-                        </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src='/images/cart/cart-image-2.PNG' />
-                                <Details>
-                                    <ProductName><b>Product : </b>Hakura T-Shirt</ProductName>
-                                    <ProductId><b>ID : </b>678555903</ProductId>
-                                    <ProductColor color='gray' />
-                                    <ProductSize><b>Size : </b>M</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <AddIcon />
-                                    <ProductAmount>2</ProductAmount>
-                                    <RemoveIcon />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 20</ProductPrice>
-                            </PriceDetail> 
-                        </Product>
+                        {cart.products.map((product) => (
+                            <>
+                                <Product>
+                                    <ProductDetail>
+                                        <Image src={product.img} />
+                                        <Details>
+                                            <ProductName><b>Product : </b>{product.title}</ProductName>
+                                            <ProductId><b>ID : </b>{product._id}</ProductId>
+                                            <ProductColor color={product.color} />
+                                            <ProductSize><b>Size : </b>{product.size}</ProductSize>
+                                        </Details>
+                                    </ProductDetail>
+                                    <PriceDetail>
+                                        <ProductAmountContainer>
+                                            <AddIcon />
+                                            <ProductAmount>{product.quantity}</ProductAmount>
+                                            <RemoveIcon />
+                                        </ProductAmountContainer>
+                                        <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
+                                    </PriceDetail> 
+                                </Product>
+                                <Hr />
+                            </>
+                        ))}
                     </Info>
                     <Summary>
                         <SummaryItem>
                             <SummaryTitle>Order Summary</SummaryTitle>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 80</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -227,7 +218,7 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type='total'>
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$ 83.50</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryButton>Checkout</SummaryButton>
                     </Summary>
