@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 
@@ -14,33 +20,32 @@ import Success from './pages/success/Success';
 
 const App = () => {
 
-  // const user = useSelector((state) => state.user.currentUser);
-  
-  const ProtectedRoute = ({ children }) => {
-
-    const user = useSelector((state) => state.user.currentUser);
-
-    if (!user)
-    {
-      return <Navigate to='/login' />
-    }
-
-    return children;
-
-  };
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' exact element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path='/products/:category' element={<ProtectedRoute><ProductList /></ProtectedRoute>} />
-        <Route path='/product/:id' element={<ProtectedRoute><Product /></ProtectedRoute>} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/cart' element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path='/success' element={<Success />} />
-      </Routes>
-    </BrowserRouter>
+    <Router>
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route path="/products/:category">
+        <ProductList />
+      </Route>
+      <Route path="/product/:id">
+        <Product />
+      </Route>
+      <Route path="/cart">
+        <Cart />
+      </Route>
+      <Route path="/success">
+        <Success />
+      </Route>
+      <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+      <Route path="/register">
+        {user ? <Redirect to="/" /> : <Register />}
+      </Route>
+    </Switch>
+  </Router>
   );
 };
 

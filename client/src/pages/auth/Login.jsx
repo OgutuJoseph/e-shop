@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { userLogin } from '../../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /** import css different media types */
 import { mobile } from '../../responsive';
@@ -74,12 +74,10 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const { isFetching, error } = useSelector((state) => state.user);
-    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
         userLogin(dispatch, { username, password });
-        navigate('/')
     };
 
     return (
