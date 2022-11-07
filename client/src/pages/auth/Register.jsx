@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 /** import css different media types */
 import { mobile } from '../../responsive';
@@ -50,6 +51,15 @@ const Button = styled.button`
     color: white;
     cursor: pointer;
 `
+const LinkItem = styled.a`
+    margin: 5px 0px;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`
 
 const Register = () => {
     return (
@@ -68,6 +78,8 @@ const Register = () => {
                     </Agreement>
                     <Button>Create</Button>
                 </Form>
+                <br />
+                Already have an account? <Link to='/login' style={{ color: 'black', textDecoration: 'none' }}><LinkItem>Login</LinkItem></Link>
             </Wrapper>
         </Container>
     )

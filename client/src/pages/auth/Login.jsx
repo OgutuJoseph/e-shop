@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { userLogin } from '../../redux/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 /** import css different media types */
 import { mobile } from '../../responsive';
@@ -46,8 +49,12 @@ const Button = styled.button`
     color: white;
     cursor: pointer;
     margin-bottom: 10px;
+    &:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+    }
 `
-const Link = styled.a`
+const LinkItem = styled.a`
     margin: 5px 0px;
     font-size: 12px;
     cursor: pointer;
@@ -56,18 +63,36 @@ const Link = styled.a`
         text-decoration: underline;
     }
 `
+const Error = styled.span`
+    color: red
+`
 
 const Login = () => {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const { isFetching, error } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        userLogin(dispatch, { username, password });
+        navigate('/')
+    };
+
     return (
         <Container>
             <Wrapper>
                 <Title>Sign In.</Title>
                 <Form>
-                    <Input placeholder='Username' />
-                    <Input placeholder='Password' /> 
-                    <Button>Login</Button>
-                    <Link>Forgot password?</Link>
-                    <Link>Create a new account.</Link>
+                    <Input placeholder='Username' type='text' onChange={(e) => setUsername(e.target.value)} />
+                    <Input placeholder='Password' type='password' onChange={(e) => setPassword(e.target.value)} /> 
+                    <Button onClick={handleLogin} disabled={isFetching}>Login</Button>
+                    {error && <Error>Something went wrong.</Error>}
+                    <LinkItem>Forgot password?</LinkItem>
+                    <Link to='/register' style={{ color: 'black', textDecoration: 'none' }}><LinkItem>Create a new account.</LinkItem></Link>
                 </Form>
             </Wrapper>
         </Container>

@@ -11,7 +11,7 @@ import { mobile } from '../../responsive';
 
 /** import material icons */
 import SearchIcon from '@mui/icons-material/Search';
-import MailIcon from '@mui/icons-material/Mail';
+// import MailIcon from '@mui/icons-material/Mail';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 /** styled components */
@@ -99,8 +99,8 @@ const Navbar = () => {
                     <Logo>E-Shop</Logo>
                 </Center>
                 <Right>
-                    <MenuItem>Register</MenuItem>
-                    <MenuItem>Login</MenuItem>
+                    <Link to='/register' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Register</MenuItem></Link>
+                    <Link to='/login' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Login</MenuItem></Link>
                     {/* <MenuItem>
                         <Badge badgeContent={4} color="primary">
                             <MailIcon color="action" />
