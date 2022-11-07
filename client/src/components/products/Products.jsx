@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { userRequest } from '../../requestMethods';
 
 /** import components */
 import Product from './Product';
@@ -21,10 +22,30 @@ const Products = ({ cat, filterResults, sort }) => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
 
+    /** wihout headers */
+    // useEffect(() => {
+    //     const getProducts = async () => {
+    //         try {
+    //             const res = await axios.get(
+    //                 cat
+    //                 ?
+    //                 `http://localhost:5000/api/products/byParams?category=${cat}`
+    //                 :
+    //                 `http://localhost:5000/api/products`
+    //             );
+    //             setProducts(res.data);
+    //         } catch (error) {
+                
+    //         }
+    //     };
+    //     getProducts();
+    // }, [cat])
+
+    /** with headers */
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get(
+                const res = await userRequest.get(
                     cat
                     ?
                     `http://localhost:5000/api/products/byParams?category=${cat}`
@@ -33,11 +54,11 @@ const Products = ({ cat, filterResults, sort }) => {
                 );
                 setProducts(res.data);
             } catch (error) {
-                
+                console.log('error: ', error);
             }
         };
         getProducts();
-    }, [cat])
+    }, [cat]);
 
     console.log('products: ', products);
 

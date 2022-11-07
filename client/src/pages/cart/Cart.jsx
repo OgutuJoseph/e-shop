@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
-import { userRequest } from '../../requestMethods'
+import { userRequest } from '../../requestMethods';
 import { useNavigate } from 'react-router-dom';
 
 /** import css different media types */
