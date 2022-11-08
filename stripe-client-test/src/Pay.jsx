@@ -30,7 +30,7 @@ const Pay = () => {
                         amount: 400
                     }
                 )
-                console.log('dataa: ', res.data);
+                // console.log('dataa: ', res.data);
                 navigate('/success');
             } catch (error) {
                 console.log('error: ', error);

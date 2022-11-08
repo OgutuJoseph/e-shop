@@ -9,37 +9,35 @@ import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import Login from "./pages/login/Login";
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  // const admin = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).admin).currentAdmin.others.isAdmin;
+  // const admin = useSelector((state) => state.admin.currentAdmin.others.isAdmin);
+  const admin = true;
+
   return (
     <Router>
-      <Topbar />
-      <div className="container">
-        <Sidebar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/users">
-            <UserList />
-          </Route>
-          <Route path="/user/:userId">
-            <User />
-          </Route>
-          <Route path="/newUser">
-            <NewUser />
-          </Route>
-          <Route path="/products">
-            <ProductList />
-          </Route>
-          <Route path="/product/:productId">
-            <Product />
-          </Route>
-          <Route path="/newproduct">
-            <NewProduct />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/login"><Login /></Route>
+        {admin && (
+          <>
+            <Topbar />
+            <div className="container">
+              <Sidebar />        
+              <Route exact path="/"><Home /></Route>
+              <Route path="/users"><UserList /></Route>
+              <Route path="/user/:userId"><User /></Route>
+              <Route path="/newUser"><NewUser /></Route>
+              <Route path="/products"><ProductList /></Route>
+              <Route path="/product/:productId"><Product /></Route>
+              <Route path="/newproduct"><NewProduct /></Route>
+            </div>
+          </> )
+        }        
+      </Switch>
     </Router>
   );
 }

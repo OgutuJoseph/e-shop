@@ -60,7 +60,7 @@ const Products = ({ cat, filterResults, sort }) => {
         getProducts();
     }, [cat]);
 
-    console.log('products: ', products);
+    // console.log('products: ', products);
 
     /** to handle filter */
     useEffect(() => {
