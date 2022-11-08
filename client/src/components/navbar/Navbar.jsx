@@ -83,7 +83,7 @@ const Navbar = () => {
 
     const cart = useSelector(state => state.cart);
     const cartItems = useSelector(state => state.cart.cartItems);
-    console.log('cart: ', cart); 
+    const user = useSelector((state) => state.user.currentUser);
 
     return (
         <Container>
@@ -99,8 +99,8 @@ const Navbar = () => {
                     <Logo>E-Shop</Logo>
                 </Center>
                 <Right>
-                    <Link to='/register' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Register</MenuItem></Link>
-                    <Link to='/login' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Login</MenuItem></Link>
+                    {!user && <Link to='/register' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Register</MenuItem></Link> }
+                    {user ? <Link to='#' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Logout</MenuItem></Link> : <Link to='/login' style={{ color: 'black', textDecoration: 'none' }}><MenuItem>Login</MenuItem></Link> }
                     {/* <MenuItem>
                         <Badge badgeContent={4} color="primary">
                             <MailIcon color="action" />
